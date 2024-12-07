@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Update Profile</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Firebase CDN Links -->
+    <script type="module">
+        // Import the necessary Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, updateProfile, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCAFeRHQNfVlBiW9aS1GV2COYU_tj3gV_c",
+            authDomain: "hackathon-prep-3955c.firebaseapp.com",
+            databaseURL: "https://hackathon-prep-3955c-default-rtdb.firebaseio.com",
+            projectId: "hackathon-prep-3955c",
+            storageBucket: "hackathon-prep-3955c.appspot.com",
+            messagingSenderId: "925054448057",
+            appId: "1:925054448057:web:564d46eb34af45cf2fc668",
+            measurementId: "G-YT03TEGT0T"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        // Handle Sign In
+        document.getElementById("sign_in").addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // Show the profile update page and hide login page
+                    document.querySelector(".login").classList.add("hide");
+                    document.querySelector(".profile_page").classList.remove("hide");
+                    document.getElementById("user_name").textContent = user.displayName || 'No Name';
+                    
+                    // Fill in the current user profile information
+                    document.getElementById("username").value = user.displayName || '';
+                })
+                .catch((error) => {
+                    alert("Error logging in: " + error.message);
+                });
+        });
+
+        // Handle Profile Update Form Submission
+        document.getElementById("profile_form").addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const newPassword = document.getElementById("new_password").value;
+
+            const user = auth.currentUser;
+            if (user) {
+                // Update the user's profile in Firebase Realtime Database
+                const userRef = ref(db, 'users/' + user.uid);
+                set(userRef, {
+                    username: username,
+                    password: newPassword // In real applications, don't store passwords in plain text
+                }).then(() => {
+                    // Update user profile name in Firebase Authentication
+                    updateProfile(user, {
+                        displayName: username
+                    }).then(() => {
+                        // If password is provided, update the password
+                        if (newPassword) {
+                            updatePassword(user, newPassword).then(() => {
+                                alert("Password updated successfully!");
+                            }).catch(error => {
+                                alert("Error updating password: " + error.message);
+                            });
+                        }
+                        alert("Profile updated successfully!");
+                    }).catch(error => {
+                        alert("Error updating profile: " + error.message);
+                    });
+                }).catch(error => {
+                    alert("Error updating profile in Firebase: " + error.message);
+                });
+            }
+        });
+
+        // Handle Logout
+        document.getElementById("logout").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                // Redirect to login page
+                document.querySelector(".profile_page").classList.add("hide");
+                document.querySelector(".login").classList.remove("hide");
+            }).catch((error) => {
+                alert("Error logging out: " + error.message);
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Profile Update Section (Visible after login) -->
+    <div class="profile_page hide">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><span id="user_name">Username</span></li>
+                    <li><a href="#" id="logout">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="container main">
+            <div class="main_content">
+                <h2>Update Profile</h2>
+                <form id="profile_form">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Username" required>
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" placeholder="New Password" required autocomplete="current-password">
+                    <label for="profile_image">Update Profile Image (Optional)</label>
+                    <input type="file" id="profile_image">
+                    <button type="submit" id="update_profile_btn">Update Profile</button>
+                </form>
+            </div>
+        </div>
+        <footer>
+            <div class="footer_text">
+                <p>© 2024 Reserved by Babar Ali</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

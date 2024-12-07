@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,900;1,500;1,700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    counter-reset: section;
+}
+
+header {
+    background: #111;
+    color: #fff;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+header ul li a {
+    color: #fff;
+}
+
+.notifiy {
+    background: green;
+    color: #fff;
+    text-align: center;
+    width: 80%;
+    margin: 30px auto;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Main Content */
+.main_content {
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.main_content .post_form {
+    width: 300px;
+    margin: 50px auto;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.main_content .post_form input,
+textarea {
+    width: 100%;
+    border: 1px solid #111;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.main_content .post_form button {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.main_content .post_form button:hover {
+    background: #444;
+}
+
+/* Posts Table */
+.my_content {
+    width: 100%;
+    padding: 30px;
+}
+
+.my_content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.my_content table th,
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.my_content table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Footer */
+footer {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    color: #fff;
+    background: #111;
+    text-align: center;
+}
+
+
+/* Styling remains largely the same with these additions */
+
+.profile_image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+table td img {
+    display: block;
+    margin: auto;
+}

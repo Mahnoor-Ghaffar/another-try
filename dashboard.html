@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Management with Profile Image</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <!-- Blog Section -->
+    <div class="my_blog hide">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="profile.html"><span id="user_name"></span></a></li>
+                    <li><a href="#" id="logout">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="notify"></div>
+        <div class="container main">
+            <div class="main_content">
+                <!-- Post Form -->
+                <div class="post_form">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" placeholder="Enter Title" minlength="5" maxlength="50" required title="Title must be between 5 to 50 characters">
+                    <label for="post_content">Your Post</label>
+                    <textarea id="post_content" cols="30" rows="10" placeholder="Enter your content here" minlength="100" maxlength="3000" required title="Content must be between 100 to 3000 characters"></textarea>
+                    <label for="profile_image">Profile Image</label>
+                    <input type="file" id="profile_image">
+                    <button id="post_btn">Post Now</button>
+                </div>
+
+                <!-- Posts Table -->
+                <div class="my_content">
+                    <h2>My Posts</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Content</th>
+                                <th>Publish Date</th>
+                                <th>Profile Image</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer_text">
+                <p>© 2024 Reserved by Babar Ali</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Section -->
+    <div class="login">
+        <div class="login_form">
+            <h2>Login</h2>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button id="sign_in">Sign In</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
+
+
+
+
+
